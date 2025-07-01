@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Coding with Friends Fast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- AOS for scroll animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #00ffc3;
+      --primary-dark: #00d4a3;
+      --dark: #1a1826;
+      --darker: #12101a;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --dark-blue: #29273b;
+      --purple: #928dab;
+    }
+    
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: var(--light);
+      line-height: 1.7;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+    
+    header {
+      background: rgba(10, 8, 20, 0.9);
+      padding: 20px 5%;
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      position: fixed; 
+      width: 100%;
+      top: 0; 
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    header.scrolled { 
+      padding: 15px 5%;
+      background: rgba(5, 3, 15, 0.98);
+    }
+    
+    header h1 { 
+      font-size: 1.6rem; 
+      color: var(--primary); 
+      display: flex; 
+      align-items: center; 
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    header img { 
+      height: 36px; 
+      margin-right: 12px; 
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+    
+    header.scrolled img {
+      height: 32px;
+    }
+    
+    header img:hover {
+      transform: rotate(5deg) scale(1.05);
+    }
+    
+    nav { 
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    nav a { 
+      color: var(--light); 
+      text-decoration: none; 
+      font-weight: 500; 
+      position: relative;
+      font-size: 1.05rem;
+      transition: color 0.3s;
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0; 
+      height: 2px; 
+      background: var(--primary);
+      bottom: -5px; 
+      left: 0;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    nav a:hover {
+      color: var(--primary);
+    }
+    
+    nav a:hover::after { 
+      width: 100%; 
+    }
+    
+    section { 
+      padding: 100px 5%; 
+      position: relative;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    .hero {
+      min-height: 100vh;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,255,195,0.1) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      animation: pulse 15s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(25%, 15%); }
+      100% { transform: translate(-15%, -25%); }
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    
+    .hero h2 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      background: linear-gradient(to right, var(--primary), #00e6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0, 255, 195, 0.2);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta {
+      margin-top: 30px; 
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px; 
+      background: var(--primary);
+      color: var(--darker); 
+      border-radius: 50px; 
+      font-weight: 600; 
+      text-decoration: none; 
+      position: relative;
+      overflow: hidden;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 255, 195, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 255, 195, 0.4);
+      background: var(--primary-dark);
+    }
+    
+    .cta:active {
+      transform: translateY(1px);
+    }
+    
+    .cta i {
+      transition: transform 0.3s;
+    }
+    
+    .cta:hover i {
+      transform: translateX(3px);
+    }
+    
+    .features { 
+      background: var(--dark-blue); 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+      gap: 30px; 
+    }
+    
+    .feature {
+      background: rgba(58, 55, 81, 0.6);
+      padding: 40px 30px; 
+      border-radius: 15px;
+      text-align: center; 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    
+    .feature:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 255, 195, 0.2);
+    }
+    
+    .feature i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      background: rgba(0, 255, 195, 0.1);
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      border-radius: 50%;
+      text-align: center;
+    }
+    
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .feature p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .testimonials { 
+      background: var(--darker); 
+      text-align: center;
+    }
+    
+    .testimonial-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .testimonial { 
+      max-width: 500px; 
+      background: rgba(46, 44, 62, 0.7); 
+      padding: 30px; 
+      border-radius: 15px;
+      font-style: italic;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      flex: 1 1 400px;
+      text-align: left;
+    }
+    
+    .testimonial:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 255, 195, 0.2);
+    }
+    
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 4rem;
+      color: rgba(0, 255, 195, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .testimonial span {
+      display: block;
+      margin-top: 20px;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .contact { 
+      background: var(--dark-blue); 
+    }
+    
+    form { 
+      max-width: 600px; 
+      margin: 0 auto; 
+      display: flex;
+      flex-direction: column; 
+      gap: 20px; 
+    }
+    
+    .form-group {
+      position: relative;
+    }
+    
+    input, textarea { 
+      width: 100%;
+      padding: 16px 20px; 
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px; 
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 255, 195, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    input::placeholder, textarea::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    
+    button { 
+      padding: 16px; 
+      background: var(--primary);
+      color: var(--darker); 
+      border: none; 
+      border-radius: 10px;
+      font-weight: 600; 
+      font-size: 1.1rem;
+      cursor: pointer; 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    button:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 5px 15px rgba(0, 255, 195, 0.3);
+    }
+    
+    button:active {
+      transform: translateY(1px);
+    }
+    
+    footer { 
+      background: var(--darker); 
+      text-align: center; 
+      padding: 40px 20px; 
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .social-links a {
+      color: var(--gray);
+      font-size: 1.5rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    /* Floating animation for hero elements */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .floating {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      header h1 {
+        margin-bottom: 15px;
+      }
+      
+      nav {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .cta {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="header" data-aos="fade-down">
+    <h1><img src="logo.jpg" alt="Logo" class="floating">Learn Coding with Friends Fast</h1>
+    <nav>
+      <a href="#hero" data-aos="fade-down" data-aos-delay="100">Home</a>
+      <a href="#features" data-aos="fade-down" data-aos-delay="200">Why Join?</a>
+      <a href="#join" data-aos="fade-down" data-aos-delay="300">Join Us</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h2 data-aos="fade-up" data-aos-delay="100">Level Up Your Coding Skills — Together</h2>
+      <p data-aos="fade-up" data-aos-delay="300">Join our WhatsApp group where learning is fun, fast, and friendly. Code, collaborate, and grow with friends.</p>
+      <a href="https://chat.whatsapp.com/Be3oabaetUMIVADQQhTjYu" class="cta" data-aos="fade-up" data-aos-delay="500">
+        Join the Group Now <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2 class="section-title" data-aos="fade-up">Why Join Our Community?</h2>
+    <div class="feature" data-aos="fade-up" data-aos-delay="100">
+      <i class="fas fa-users"></i>
+      <h3>Peer Support</h3>
+      <p>Get instant help from fellow learners and experienced developers. Never feel stuck again with our supportive community.</p>
+    </div>
+    <div class="feature" data-aos="fade-up" data-aos-delay="200">
+      <i class="fas fa-trophy"></i>
+      <h3>Mini Challenges</h3>
+      <p>Engage in bite-sized coding tasks and friendly competitions to sharpen your skills in a fun way.</p>
+    </div>
+    <div class="feature" data-aos="fade-up" data-aos-delay="300">
+      <i class="fas fa-fire"></i>
+      <h3>Daily Motivation</h3>
+      <p>Receive daily coding tips, reminders, and encouragement to keep you consistent in your learning journey.</p>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2 class="section-title" data-aos="fade-up">What Our Members Say</h2>
+    <div class="testimonial-container">
+      <div class="testimonial" data-aos="fade-right" data-aos-delay="100">
+        "This group completely transformed my coding journey. The peer support and daily challenges kept me motivated when I wanted to give up. Learning with friends is truly a game-changer!"
+        <span>— CyderCoder</span>
+      </div>
+      <div class="testimonial" data-aos="fade-left" data-aos-delay="200">
+        "I landed my first internship thanks to the projects and tips shared in this community! The collaborative environment helped me grow much faster than learning alone."
+        <span>— Candy Graphics</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="join">
+    <h2 class="section-title" data-aos="fade-up">Get in Touch</h2>
+    <form action="https://formspree.io/f/your-form-id" method="POST" data-aos="fade-up" data-aos-delay="100">
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
+      <input type="hidden" name="_next" value="thank-you.html" />
+      <button type="submit">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="social-links">
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>&copy; 2025 Learn Coding with Friends Fast. Designed for dreamers, built for doers.</p>
+    <p>All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-in-out-quad',
+      mirror: false
+    });
+    
+    // Change header style on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Add animation to features on hover
+    document.querySelectorAll('.feature').forEach(feature => {
+      feature.addEventListener('mouseenter', () => {
+        const icon = feature.querySelector('i');
+        icon.style.transform = 'rotate(10deg) scale(1.1)';
+      });
+      
+      feature.addEventListener('mouseleave', () => {
+        const icon = feature.querySelector('i');
+        icon.style.transform = 'rotate(0) scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>
